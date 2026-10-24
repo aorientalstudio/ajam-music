@@ -1,0 +1,17 @@
+name: Keep Supabase Alive
+
+on:
+  schedule:
+    # רץ אוטומטית כל יום שני וחמישי בשעה 12:00 בצהריים (UTC)
+    - cron: '0 12 * * 1,4'
+  workflow_dispatch: # מאפשר לך להפעיל את זה ידנית בלחיצת כפתור לבדיקה
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Ping Request
+        run: |
+          curl -X GET "${{ secrets.SUPABASE_URL }}/rest/v1/" \
+          -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+          -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}"
